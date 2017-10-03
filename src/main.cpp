@@ -56,10 +56,10 @@ int main()
         if (event == "telemetry") {
           // j[1] is the data JSON object
           
-          string sensor_measurment = j[1]["sensor_measurement"];
+          string sensor_measurement = j[1]["sensor_measurement"];
           
           MeasurementPackage meas_package;
-          istringstream iss(sensor_measurment);
+          istringstream iss(sensor_measurement);
     	  long long timestamp;
 
     	  // reads first element from the current line
@@ -86,7 +86,8 @@ int main()
           		iss >> ro;
           		iss >> theta;
           		iss >> ro_dot;
-          		meas_package.raw_measurements_ << ro,theta, ro_dot;
+                meas_package.raw_measurements_ << ro, theta, ro_dot;
+
           		iss >> timestamp;
           		meas_package.timestamp_ = timestamp;
           }
@@ -105,10 +106,10 @@ int main()
     	  gt_values(3) = vy_gt;
     	  ground_truth.push_back(gt_values);
           
-          //Call ProcessMeasurment(meas_package) for Kalman filter
+          //Call ProcessMeasurement(meas_package) for Kalman filter
     	  fusionEKF.ProcessMeasurement(meas_package);    	  
 
-    	  //Push the current estimated x,y positon from the Kalman filter's state vector
+    	  //Push the current estimated x,y position from the Kalman filter's state vector
 
     	  VectorXd estimate(4);
 
